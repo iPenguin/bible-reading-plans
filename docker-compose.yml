@@ -1,0 +1,26 @@
+version: '2'
+services:
+    nodejs:
+        image: node-app
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        ports:
+            - "3000:3000"
+        environment:
+            - "NODE_ENV=development"
+        volumes:
+            - .:/home/node/app
+        working_dir: /home/node/app
+        entrypoint: "/usr/local/bin/setup.sh"
+        container_name: nodejs
+    mongo:
+        image: mongo:4-bionic
+        environment:
+            - "MONGO_INITDB_ROOT_USERNAME=admin"
+            - "MONGO_INITDB_ROOT_PASSWORD=password"
+        volumes:
+            - ./data:/data/db
+        ports:
+            - "27017:27017"
+        container_name: mongodb
