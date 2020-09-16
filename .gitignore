@@ -59,4 +59,4 @@ typings/
 .env
 
 # Configuration for site.
-config.txt
+src/config.json

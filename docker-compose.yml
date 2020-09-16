@@ -1,6 +1,6 @@
 version: '2'
 services:
-    nodejs:
+    brp:
         image: node-app
         build:
             context: ./
@@ -13,7 +13,7 @@ services:
             - .:/home/node/app
         working_dir: /home/node/app
         entrypoint: "/usr/local/bin/setup.sh"
-        container_name: nodejs
+        container_name: "brp"
     mongo:
         image: mongo:4-bionic
         environment:
@@ -23,4 +23,4 @@ services:
             - ./data:/data/db
         ports:
             - "27017:27017"
-        container_name: mongodb
+        container_name: "brpmongodb"
