@@ -4,6 +4,8 @@ const db_uri = "mongodb://admin:password@localhost/?authSource=admin&authMechani
 
 const request = require('request');
 const config = require('../config.json');
+const fs = require( 'fs' );
+
 
 let express = require('express');
 let app = express();
@@ -17,9 +19,14 @@ let mongo_options = {
  * Get all the pages for a given user and notebook
  */
 app.get( '/bibles/', ( req, res ) => {
+  let langs = [];
+  let query = `${config.bible_api_url}/bibles`;
 
+  if( req.query.language ) {
+    query += `?language=${req.query.language}`;
+  }
   request( {
-    uri: `${config.bible_api_url}/bibles`,
+    uri: query,
     json: true,
     headers: {
       'api-key': `${config.bible_api_key}`,
@@ -28,6 +35,27 @@ app.get( '/bibles/', ( req, res ) => {
     if (err) return console.log(err);
 
     res.send( body );
+  } );
+} );
+
+/*
+ * Get all the languages from the server
+ */
+app.get( '/languages/', ( req, res ) => {
+  MongoClient.connect( db_uri, mongo_options, (err, client) => {
+    if(err) throw err;
+
+    let criteria = {
+      user_id: '',
+      notebook: '',
+    };
+
+    let cursor = client.db('bibleplans').collection( 'languages-temp' ).find();
+
+    cursor.toArray( ( err, result ) => {
+      if (err) throw err;
+      res.send( result );
+    } );
   } );
 } );
 
