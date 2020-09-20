@@ -58,5 +58,8 @@ typings/
 # dotenv environment variables file
 .env
 
+data/
+package-lock.json
+
 # Configuration for site.
 src/config.json
