@@ -22,3 +22,18 @@
 .App-intro {
   font-size: large;
 }
+
+.App .v {
+    font-size: 10px;
+    margin: 0.5em;
+    vertical-align: super;
+}
+
+.brp-bible-copy-right {
+    margin: 1.25em;
+    background-color: lightsteelblue;
+    padding: 0.5em;
+    border-radius: 10px;
+    font-size: 12px;
+    font-style: italic;
+}
