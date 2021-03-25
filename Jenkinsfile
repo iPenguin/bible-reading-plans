@@ -1,32 +1,37 @@
 pipeline {
-    agent {
-        kubernetes {
-            label 'worker'
-        }
+  agent {
+    kubernetes {
+      label 'worker'
     }
-    tools {
+
+  }
+  stages {
+    stage('Build') {
+      steps {
+        sh 'npm install'
         nodejs 'node-14.x'
+      }
     }
-    environment {
-        CI = 'true'
+
+    stage('Test') {
+      steps {
+        sh './jenkins/scripts/test.sh'
+      }
     }
-    stages {
-        stage('Build') {
-            steps {
-                sh 'npm install'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh './jenkins/scripts/test.sh'
-            }
-        }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
-            }
-        }
+
+    stage('Deliver') {
+      steps {
+        sh './jenkins/scripts/deliver.sh'
+        input 'Finished using the web site? (Click "Proceed" to continue)'
+        sh './jenkins/scripts/kill.sh'
+      }
     }
+
+  }
+  tools {
+    nodejs 'node-14.x'
+  }
+  environment {
+    CI = 'true'
+  }
 }
