@@ -5,7 +5,7 @@ pipeline {
         }
     }
     tools {
-        node 'node-14.x'
+        nodejs 'node-14.x'
     }
     environment {
         CI = 'true'
