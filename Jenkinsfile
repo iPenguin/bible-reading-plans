@@ -9,7 +9,6 @@ pipeline {
     stage('Build') {
       steps {
         sh 'npm install'
-        nodejs 'node-14.x'
       }
     }
 
