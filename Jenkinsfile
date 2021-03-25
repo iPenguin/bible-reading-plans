@@ -4,6 +4,9 @@ pipeline {
             label 'worker'
         }
     }
+    tools {
+        node 'node-14.x'
+    }
     environment {
         CI = 'true'
     }
